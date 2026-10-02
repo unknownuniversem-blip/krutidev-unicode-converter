@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>कृतिदेव से यूनिकोड मंगल फॉन्ट कनवर्टर (Kruti Dev to Unicode Font Converter)</title>
+  <meta name="description" content="100% फ्री और सुरक्षित कृतिदेव 010 से यूनिकोड मंगल और यूनिकोड से कृतिदेव फॉन्ट कनवर्टर। कोर्ट, सरकारी कार्यालय, टाइपिंग परीक्षा के लिए तत्काल फॉन्ट रूपांतरण।">
+
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230f172a' stroke='%2338bdf8' stroke-width='1.5'/%3E%3Ctext x='8' y='22' font-family='sans-serif' font-size='16' font-weight='bold' fill='%2338bdf8'%3Eक%3C/text%3E%3Cpath d='M20 10l5 5-5 5' stroke='%2310b981' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E">
+
+  <style>
+    :root {
+      --bg: #0b1120;
+      --card: #151f32;
+      --card-inner: #0d1526;
+      --border: #223249;
+      --border-focus: #38bdf8;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --primary: #38bdf8;
+      --primary-hover: #0284c7;
+      --accent: #10b981;
+      --accent-hover: #059669;
+      --radius: 12px;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans Devanagari", sans-serif;
+      word-break: break-word;
+      overflow-wrap: anywhere;
+    }
+    html, body {
+      max-width: 100vw;
+      overflow-x: hidden;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+    .container {
+      width: 100%;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 1.25rem 1rem 3.5rem 1rem;
+    }
+    header { text-align: center; margin-bottom: 1.75rem; }
+    .brand-box {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 0.6rem;
+    }
+    .brand-name {
+      font-size: 1.3rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: #fff;
+    }
+    .brand-badge {
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--primary);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 9999px;
+      text-transform: uppercase;
+    }
+    header h1 {
+      font-size: clamp(1.4rem, 3.5vw, 2.1rem);
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 0.4rem;
+    }
+    header p {
+      color: var(--muted);
+      font-size: clamp(0.85rem, 2vw, 0.95rem);
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    /* Direction Switch Bar */
+    .switch-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 10px 14px;
+      margin-bottom: 1.25rem;
+    }
+    .dir-label {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #fff;
+    }
+    .swap-btn {
+      background: var(--card-inner);
+      border: 1.5px solid var(--border);
+      color: var(--primary);
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+    .swap-btn:hover {
+      border-color: var(--primary);
+      background: rgba(56, 189, 248, 0.1);
+    }
+
+    /* Two Column Textareas Layout */
+    .converter-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+      margin-bottom: 1.25rem;
+    }
+    @media (min-width: 768px) {
+      .converter-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    .box-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+    }
+    .box-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .box-title {
+      font-size: 0.9rem;
+      font-weight: 800;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .char-badge {
+      font-size: 0.72rem;
+      color: var(--muted);
+      font-weight: 600;
+    }
+    textarea {
+      width: 100%;
+      height: 280px;
+      background: var(--card-inner);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-size: 1rem;
+      line-height: 1.6;
+      padding: 12px;
+      resize: vertical;
+      outline: none;
+      transition: border-color 0.15s ease;
+    }
+    textarea:focus {
+      border-color: var(--border-focus);
+    }
+    .box-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .btn-tool {
+      flex: 1;
+      padding: 8px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      background: var(--card-inner);
+      border: 1px solid var(--border);
+      color: var(--text);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .btn-tool:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+    .btn-convert {
+      display: block;
+      width: 100%;
+      padding: 14px;
+      font-size: 1.05rem;
+      font-weight: 800;
+      text-align: center;
+      background: var(--accent);
+      color: #052e16;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.15s ease;
+      margin-bottom: 1.25rem;
+    }
+    .btn-convert:hover {
+      background: var(--accent-hover);
+    }
+
+    /* Quick Samples */
+    .sample-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 1.25rem;
+    }
+    .sample-label {
+      font-size: 0.78rem;
+      color: var(--muted);
+      font-weight: 700;
+    }
+    .sample-chip {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 9999px;
+      padding: 4px 12px;
+      font-size: 0.76rem;
+      font-weight: 600;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .sample-chip:hover {
+      border-color: var(--primary);
+      color: #fff;
+    }
+
+    /* Toast */
+    #toast {
+      visibility: hidden;
+      min-width: 200px;
+      background-color: var(--accent);
+      color: #052e16;
+      text-align: center;
+      border-radius: 8px;
+      padding: 10px 16px;
+      position: fixed;
+      z-index: 2000;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-weight: 700;
+      font-size: 0.85rem;
+    }
+    #toast.show {
+      visibility: visible;
+      animation: fadein 0.3s, fadeout 0.3s 2s;
+    }
+    @keyframes fadein { from { bottom: 0; opacity: 0; } to { bottom: 24px; opacity: 1; } }
+    @keyframes fadeout { from { bottom: 24px; opacity: 1; } to { bottom: 0; opacity: 0; } }
+
+    /* Ecosystem */
+    .ecosystem-section {
+      margin-top: 2.5rem;
+      border-top: 1px solid var(--border);
+      padding-top: 2rem;
+    }
+    .ecosystem-section h3 {
+      font-size: 1.1rem;
+      color: #fff;
+      margin-bottom: 0.4rem;
+      text-align: center;
+    }
+    .ecosystem-section p {
+      font-size: 0.82rem;
+      color: var(--muted);
+      text-align: center;
+      margin-bottom: 1.25rem;
+    }
+    .eco-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+    }
+    .eco-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+      text-decoration: none;
+      color: var(--text);
+      transition: border-color 0.15s ease;
+    }
+    .eco-card:hover { border-color: var(--primary); }
+    .eco-card strong {
+      display: block;
+      font-size: 0.88rem;
+      color: #fff;
+      margin-bottom: 2px;
+    }
+    .eco-card span { font-size: 0.75rem; color: var(--muted); }
+    footer {
+      text-align: center;
+      margin-top: 2.5rem;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- GLOBAL NETWORK HEADER -->
+  <div id="quicktools-global-bar" style="background:#090d16; border-bottom:1px solid #1e293b; padding:10px 16px; display:flex; align-items:center; justify-content:space-between; font-family:system-ui, -apple-system, sans-serif; font-size:13px; z-index:99999; position:relative; width:100%; box-sizing:border-box;">
+    <div style="display:flex; align-items:center; gap:8px;">
+      <a href="https://unknownuniversem-blip.github.io/" style="color:#f8fafc; font-weight:700; text-decoration:none; display:flex; align-items:center; gap:6px;">
+        <span style="background:#38bdf8; color:#0b1120; font-size:10px; font-weight:900; padding:2px 6px; border-radius:4px;">HUB</span>
+        <span>QuickTools</span>
+      </a>
+    </div>
+    <div style="display:flex; align-items:center; gap:12px; overflow-x:auto;">
+      <a href="https://unknownuniversem-blip.github.io/krutidev-unicode-converter/" style="color:#38bdf8; text-decoration:none; font-weight:700; white-space:nowrap;">🔤 फॉन्ट कनवर्टर</a>
+      <span style="color:#334155;">|</span>
+      <a href="https://unknownuniversem-blip.github.io/open-astrologer/" style="color:#f59e0b; text-decoration:none; font-weight:600; white-space:nowrap;">🔮 OpenAstrologer</a>
+      <span style="color:#334155;">|</span>
+      <a href="https://unknownuniversem-blip.github.io/typing-speed-finger-test/" style="color:#94a3b8; text-decoration:none; font-weight:600; white-space:nowrap;">⌨ Typing Test</a>
+      <span style="color:#334155;">|</span>
+      <a href="https://unknownuniversem-blip.github.io/exam-resizer/" style="color:#94a3b8; text-decoration:none; font-weight:600; white-space:nowrap;">📷 Photo Resizer</a>
+      <span style="color:#334155;">|</span>
+      <a href="https://unknownuniversem-blip.github.io/passport-photo-grid/" style="color:#94a3b8; text-decoration:none; font-weight:600; white-space:nowrap;">📷 पासपोर्ट ग्रिड</a>
+      <span style="color:#334155;">|</span>
+      <a href="https://unknownuniversem-blip.github.io/age-eligibility-calc/" style="color:#38bdf8; text-decoration:none; font-weight:600; white-space:nowrap;">⏱ आयु व पात्रता</a>
+    </div>
+  </div>
+
+  <div class="container">
+    <header>
+      <div class="brand-box">
+        <svg width="34" height="34" viewBox="0 0 32 32">
+          <rect width="32" height="32" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1.5"/>
+          <text x="8" y="22" font-family="sans-serif" font-size="16" font-weight="bold" fill="#38bdf8">क</text>
+          <path d="M20 10l5 5-5 5" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+        <span class="brand-name">Kruti<span style="color:#38bdf8;">Convert</span></span>
+        <span class="brand-badge">द्वि-दिशात्मक (Bidirectional)</span>
+      </div>
+      <h1>कृतिदेव ⇄ यूनिकोड मंगल फॉन्ट कनवर्टर</h1>
+      <p>सरकारी कार्यालयों, न्यायालयों, राजस्व विभाग और टाइपिंग परीक्षाओं के लिए कृतिदेव 010 टेक्स्ट को यूनिकोड मंगल और यूनिकोड को कृतिदेव में तुरंत बदलें।</p>
+    </header>
+
+    <!-- DIRECTION SWITCH BAR -->
+    <div class="switch-bar">
+      <span class="dir-label" id="lblSource">कृतिदेव 010 (Kruti Dev)</span>
+      <button type="button" class="swap-btn" onclick="toggleDirection()">
+        ⇄ दिशा बदलें (Swap Mode)
+      </button>
+      <span class="dir-label" id="lblTarget" style="color:var(--primary);">यूनिकोड मंगल (Unicode Mangal)</span>
+    </div>
+
+    <!-- SAMPLE PRESETS -->
+    <div class="sample-bar">
+      <span class="sample-label">त्वरित नमूना (Quick Sample):</span>
+      <span class="sample-chip" onclick="loadSample(1)">सरकारी आदेश (Govt Order)</span>
+      <span class="sample-chip" onclick="loadSample(2)">न्यायालय वाद (Court Notice)</span>
+      <span class="sample-chip" onclick="loadSample(3)">टाइपिंग अभ्यास (Typing Practice)</span>
+    </div>
+
+    <!-- CONVERTER TEXTAREAS -->
+    <div class="converter-grid">
+      <div class="box-card">
+        <div class="box-header">
+          <span class="box-title" id="titleInput">📥 इनपुट टेक्स्ट (कृतिदेव)</span>
+          <span class="char-badge" id="countInput">0 वर्ण</span>
+        </div>
+        <textarea id="srcText" placeholder="यहाँ कृतिदेव टेक्स्ट पेस्ट करें..." oninput="autoConvert()"></textarea>
+        <div class="box-actions">
+          <button class="btn-tool" onclick="clearInput()">🗑 साफ करें (Clear)</button>
+          <button class="btn-tool" onclick="pasteInput()">📋 पेस्ट करें (Paste)</button>
+        </div>
+      </div>
+
+      <div class="box-card">
+        <div class="box-header">
+          <span class="box-title" id="titleOutput" style="color:var(--primary);">📤 रूपांतरित टेक्स्ट (यूनिकोड)</span>
+          <span class="char-badge" id="countOutput">0 वर्ण</span>
+        </div>
+        <textarea id="dstText" placeholder="रूपांतरित टेक्स्ट यहाँ दिखाई देगा..." readonly></textarea>
+        <div class="box-actions">
+          <button class="btn-tool" onclick="copyResult()">📋 कॉपी करें (Copy)</button>
+          <button class="btn-tool" onclick="shareWhatsApp()">💬 WhatsApp शेयर</button>
+        </div>
+      </div>
+    </div>
+
+    <button type="button" class="btn-convert" onclick="runConversion()">⚡ तुरंत रूपांतरित करें (Convert Now)</button>
+
+    <!-- ZERO STORAGE PLEDGE -->
+    <div style="display:flex; align-items:center; gap:10px; background:rgba(56,189,248,0.08); border:1px solid rgba(56,189,248,0.25); border-radius:8px; padding:10px 14px;">
+      <span style="font-size:1.2rem;">🔒</span>
+      <span style="font-size:0.78rem; color:var(--muted);">100% सुरक्षित (Client-Side): आपका कोई भी गोपनीय पत्र, कानूनी मसौदा या टाइप किया गया शब्द सर्वर पर नहीं भेजा जाता।</span>
+    </div>
+
+    <!-- ECOSYSTEM -->
+    <div class="ecosystem-section">
+      <h3>QuickTools के अन्य उपयोगी टूल्स</h3>
+      <p>बिना किसी विज्ञापन या सर्वर लोड के सीधे ब्राउज़र में चलने वाले तेज टूल्स।</p>
+      <div class="eco-grid">
+        <a href="https://unknownuniversem-blip.github.io/typing-speed-finger-test/" class="eco-card">
+          <strong>⌨ टाइपिंग स्पीड व फिंगर टेस्ट</strong>
+          <span>SSC CGL/CHSL और कोर्ट परीक्षा के लिए लाइव टाइपिंग स्पीड व एक्यूरेसी।</span>
+        </a>
+        <a href="https://unknownuniversem-blip.github.io/land-converter/" class="eco-card">
+          <strong>🌾 जमीन नाप और सर्किल रेट</strong>
+          <span>बीघा, बिस्वा, कट्ठा, धुर को वर्ग फुट में बदलें और रजिस्ट्री खर्च निकालें।</span>
+        </a>
+        <a href="https://unknownuniversem-blip.github.io/gst-quick-calc/" class="eco-card">
+          <strong>🧾 GST कैलकुलेटर व रिवर्स बिलिंग</strong>
+          <span>0%, 5%, 18%, 40% स्लैब पर बेस रेट और CGST/SGST अलग करें।</span>
+        </a>
+        <a href="https://unknownuniversem-blip.github.io/open-astrologer/" class="eco-card">
+          <strong>🔮 OpenAstrologer चैट</strong>
+          <span>बिना फोन नंबर या फीस के 1-on-1 वैदिक ज्योतिषी से बात करें।</span>
+        </a>
+      </div>
+    </div>
+
+    <footer>
+      <div>QuickTools Network &copy; 2026. 100% Free Client-Side Utilities.</div>
+    </footer>
+  </div>
+
+  <div id="toast">टेक्स्ट कॉपी हो गया!</div>
+
+  <script>
+    let mode = 'k2u'; // 'k2u' = Kruti Dev to Unicode, 'u2k' = Unicode to Kruti Dev
+
+    // Kruti Dev to Unicode lookup mappings
+    const krutiToUnicodeMap = [
+      ["ñ", "झ्"], ["Q+", "फ्"], ["w", "द़"], ["x+", "ज्ञ्"], ["T", "त्र्"],
+      ["Ñ", "ऋ"], ["à", "द्व"], ["á", "द्य"], ["â", "द्य"], ["ã", "द्म"],
+      ["ä", "द्ग"], ["å", "द्ध"], ["æ", "ष्ट"], ["ç", "ष्ठ"], ["é", "ह्न"],
+      ["ê", "ह्य"], ["ë", "हृ"], ["ì", "ह्र"], ["í", "ह्म"], ["î", "ह्ल"],
+      ["ï", "ह्व"], ["ó", "श्च"], ["õ", "श्ल"], ["ô", "श्व"], ["ù", "ड्ड"],
+      ["û", "ड्र"], ["ü", "ढ्र"], ["ÿ", "द्र"], ["ô", "श्व"],
+      ["‘", "“"], ["’", "”"], ["‚", "’"], ["“", "‘"], ["”", "’"],
+      ["„", "‘"], ["…", "‘"], ["‡", "“"], ["ˆ", "’"], ["‰", "‘"],
+      ["‹", "“"], ["›", "”"],
+      ["अा", "आ"], ["ओ", "ओ"], ["औ", "औ"], ["अॉ", "ऑ"],
+      ["क+", "क़"], ["ख+", "ख़"], ["ग+", "ग़"], ["ज+", "ज़"], ["ड+", "ड़"],
+      ["ढ+", "ढ़"], ["फ+", "फ़"], ["य+", "य़"], ["र+", "ऱ"],
+      ["1", "१"], ["2", "२"], ["3", "३"], ["4", "४"], ["5", "५"],
+      ["6", "६"], ["7", "७"], ["8", "८"], ["9", "९"], ["0", "०"],
+      ["f", "ि"], ["k", "ा"], ["h", "ी"], ["q", "ु"], ["w", "ू"],
+      ["s", "े"], ["S", "ै"], ["ks", "ो"], ["kS", "ौ"], ["a", "ं"],
+      ["¡", "ँ"], ["%", "ः"], ["~", "्"],
+      ["A", "अ"], ["B", "इ"], ["C", "ई"], ["D", "उ"], ["E", "ऊ"],
+      ["F", "ऋ"], ["G", "ए"], ["H", "ऐ"], ["I", "ओ"], ["J", "औ"],
+      ["d", "क"], ["D", "क"], ["[k", "ख"], ["x", "ग"], ["X", "घ"],
+      ["³", "ङ"], ["p", "च"], ["N", "छ"], ["t", "ज"], ["T", "झ"],
+      ["¥", "ञ"], ["V", "ट"], ["B", "ठ"], ["M", "ड"], ["<", "ढ"],
+      [".", "ण"], ["r", "त"], ["F", "थ"], ["n", "द"], ["/k", "ध"],
+      ["u", "न"], ["i", "प"], ["Q", "फ"], ["c", "ब"], ["H", "भ"],
+      ["e", "म"], [";", "य"], ["j", "र"], ["y", "ल"], ["o", "व"],
+      ["'k", "श"], ["ष", "ष"], ["l", "स"], ["g", "ह"],
+      ["{k", "क्ष"], ["=", "त्र"], ["K", "ज्ञ"], ["J", "श्र"]
+    ];
+
+    function toggleDirection() {
+      if (mode === 'k2u') {
+        mode = 'u2k';
+        document.getElementById('lblSource').innerText = 'यूनिकोड मंगल (Unicode Mangal)';
+        document.getElementById('lblSource').style.color = 'var(--primary)';
+        document.getElementById('lblTarget').innerText = 'कृतिदेव 010 (Kruti Dev)';
+        document.getElementById('lblTarget').style.color = '#fff';
+        document.getElementById('titleInput').innerText = '📥 इनपुट टेक्स्ट (यूनिकोड मंगल)';
+        document.getElementById('titleOutput').innerText = '📤 रूपांतरित टेक्स्ट (कृतिदेव)';
+        document.getElementById('srcText').placeholder = 'यहाँ यूनिकोड टेक्स्ट पेस्ट करें...';
+      } else {
+        mode = 'k2u';
+        document.getElementById('lblSource').innerText = 'कृतिदेव 010 (Kruti Dev)';
+        document.getElementById('lblSource').style.color = '#fff';
+        document.getElementById('lblTarget').innerText = 'यूनिकोड मंगल (Unicode Mangal)';
+        document.getElementById('lblTarget').style.color = 'var(--primary)';
+        document.getElementById('titleInput').innerText = '📥 इनपुट टेक्स्ट (कृतिदेव)';
+        document.getElementById('titleOutput').innerText = '📤 रूपांतरित टेक्स्ट (यूनिकोड)';
+        document.getElementById('srcText').placeholder = 'यहाँ कृतिदेव टेक्स्ट पेस्ट करें...';
+      }
+      // Swap content
+      const srcVal = document.getElementById('srcText').value;
+      const dstVal = document.getElementById('dstText').value;
+      document.getElementById('srcText').value = dstVal;
+      document.getElementById('dstText').value = '';
+      autoConvert();
+    }
+
+    function convertKrutiToUnicode(text) {
+      if (!text) return "";
+      let modified = text;
+
+      // Special reordering for Chhoti 'i' matra (f) in Kruti Dev
+      // In Kruti Dev, 'f' comes before the consonant, while in Unicode 'ि' comes after
+      let pos = modified.indexOf("f");
+      while (pos !== -1) {
+        let nextChar = modified.charAt(pos + 1);
+        let charLen = 1;
+        // Handle half letters followed by full letter
+        if (pos + 2 < modified.length && modified.charAt(pos + 2) === "k") {
+          charLen = 2;
+        }
+        modified = modified.substring(0, pos) + modified.substring(pos + 1, pos + 1 + charLen) + "f" + modified.substring(pos + 1 + charLen);
+        pos = modified.indexOf("f", pos + charLen + 1);
+      }
+
+      // Reordering for Ref (Z) -> र्
+      modified = modified.replace(/Z/g, "र्");
+
+      // Replace standard lookup mapping
+      for (let i = 0; i < krutiToUnicodeMap.length; i++) {
+        let pattern = new RegExp(escapeRegex(krutiToUnicodeMap[i][0]), "g");
+        modified = modified.replace(pattern, krutiToUnicodeMap[i][1]);
+      }
+
+      return modified;
+    }
+
+    function convertUnicodeToKruti(text) {
+      if (!text) return "";
+      let modified = text;
+
+      // Reverse replace standard lookup mapping
+      for (let i = krutiToUnicodeMap.length - 1; i >= 0; i--) {
+        if (krutiToUnicodeMap[i][1] && krutiToUnicodeMap[i][0]) {
+          let pattern = new RegExp(escapeRegex(krutiToUnicodeMap[i][1]), "g");
+          modified = modified.replace(pattern, krutiToUnicodeMap[i][0]);
+        }
+      }
+
+      // Reorder Chhoti 'i' (f) back to front of consonant
+      let pos = modified.indexOf("f");
+      while (pos > 0) {
+        let prevChar = modified.charAt(pos - 1);
+        modified = modified.substring(0, pos - 1) + "f" + prevChar + modified.substring(pos + 1);
+        pos = modified.indexOf("f", pos + 2);
+      }
+
+      return modified;
+    }
+
+    function escapeRegex(string) {
+      return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    }
+
+    function autoConvert() {
+      const src = document.getElementById('srcText').value;
+      document.getElementById('countInput').innerText = `${src.length} वर्ण`;
+
+      if (!src.trim()) {
+        document.getElementById('dstText').value = '';
+        document.getElementById('countOutput').innerText = '0 वर्ण';
+        return;
+      }
+
+      const res = (mode === 'k2u') ? convertKrutiToUnicode(src) : convertUnicodeToKruti(src);
+      document.getElementById('dstText').value = res;
+      document.getElementById('countOutput').innerText = `${res.length} वर्ण`;
+    }
+
+    function runConversion() {
+      autoConvert();
+      showToast("रूपांतरण पूर्ण!");
+    }
+
+    function copyResult() {
+      const dst = document.getElementById('dstText');
+      if (!dst.value) return;
+      navigator.clipboard.writeText(dst.value).then(() => {
+        showToast("रूपांतरित टेक्स्ट कॉपी हो गया!");
+      });
+    }
+
+    function clearInput() {
+      document.getElementById('srcText').value = '';
+      document.getElementById('dstText').value = '';
+      document.getElementById('countInput').innerText = '0 वर्ण';
+      document.getElementById('countOutput').innerText = '0 वर्ण';
+    }
+
+    async function pasteInput() {
+      try {
+        const text = await navigator.clipboard.readText();
+        document.getElementById('srcText').value = text;
+        autoConvert();
+      } catch (err) {
+        alert("क्लिपबोर्ड एक्सेस की अनुमति नहीं मिली। कृपया मैन्युअल पेस्ट करें।");
+      }
+    }
+
+    function shareWhatsApp() {
+      const dst = document.getElementById('dstText').value;
+      if (!dst) return;
+      const text = encodeURIComponent(dst.substring(0, 800) + "\n\n(कृतिदेव ⇄ यूनिकोड कनवर्टर से रूपांतरित: " + window.location.href + ")");
+      window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
+    }
+
+    function loadSample(type) {
+      if (mode === 'k2u') {
+        if (type === 1) {
+          document.getElementById('srcText').value = "dk;kZy; vkns'k% mRrj izns'k 'kklu }kjk lHkh deZpkfj;ksa dks lwfpr fd;k tkrk gSA";
+        } else if (type === 2) {
+          document.getElementById('srcText').value = "U;k;ky; ftyk ,oa l= U;k;k/kh'k% okn la[;k 108@2026 lquokbZ gsrq fu/kkZfjr dh xbZA";
+        } else {
+          document.getElementById('srcText').value = "Hkkjr ,d egku ns'k gSA ;gk¡ fofo/krk esa ,drk gSA";
+        }
+      } else {
+        if (type === 1) {
+          document.getElementById('srcText').value = "कार्यालय आदेश: उत्तर प्रदेश शासन द्वारा सभी कर्मचारियों को सूचित किया जाता है।";
+        } else if (type === 2) {
+          document.getElementById('srcText').value = "न्यायालय जिला एवं सत्र न्यायाधीश: वाद संख्या १०८/२०२६ सुनवाई हेतु निर्धारित की गई।";
+        } else {
+          document.getElementById('srcText').value = "भारत एक महान देश है। यहाँ विविधता में एकता है।";
+        }
+      }
+      autoConvert();
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById("toast");
+      toast.innerText = msg;
+      toast.className = "show";
+      setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 2200);
+    }
+  </script>
+</body>
+</html>
